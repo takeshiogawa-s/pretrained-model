@@ -2,29 +2,23 @@
 
 # ローカル実行環境
 
-マザーボード：ASUS TUF GAMING B860-PLUS
-
-メモリ : 32GB
-
-CPU :Ryzen5 8500G  
-
-GPU : Geforce RTX5070 Ti 16GB
-
-OS : Ubuntu 24.04
+- マザーボード：ASUS TUF GAMING B860-PLUS
+- メモリ : 32GB
+- CPU :Ryzen5 8500G  
+- GPU : Geforce RTX5070 Ti 16GB
+- OS : Ubuntu 24.04
 
 # NVIDIAドライバの導入
-
-まずはNVIDIAグラボを使うための環境を準備する。下記の方法でうまくいかない場合もあるので、Ubuntu CUDA導入とかでググってください。
-
-最近のUbuntuの場合、最初からNvidiaドライバが入っていることがあるのでnvidia-smiコマンドで確認する
+まずはNVIDIAグラボを使うための環境を準備する。<br>
+下記の方法でうまくいかない場合もあるので、Ubuntu CUDA導入とかでググってください。<br>
+最近のUbuntuの場合、最初からNvidiaドライバが入っていることがあるのでnvidia-smiコマンドで確認する<br>
 
 ```bash
 nvidia-smi
 ```
 
-見つからない場合は、ubuntu-drivers devicesコマンドで対応するドライバを探す
-
-このコマンドでリストが返ってくるのでrecommendedと書かれているものをインストールする
+見つからない場合は、ubuntu-drivers devicesコマンドで対応するドライバを探す<br>
+このコマンドでリストが返ってくるのでrecommendedと書かれているものをインストールする<br>
 
 ```bash
 sudo add-apt-repository ppa:graphics-drivers/ppa
@@ -33,15 +27,14 @@ sudo apt install nvidia-driver-580-open
 reboot
 ```
 
-再起動後、nvidia-smiコマンドで確認する。ここでCUDAのバージョンも出てくるが既にあるわけではなく、今さっている対GPUに対応しているCUDAバージョンが表示されている。
+再起動後、nvidia-smiコマンドで導入確認する。<br>
+ここでCUDAのバージョンも出てくるが既にあるわけではなく、今さっている対GPUに対応しているCUDAバージョンが表示されている。<br>
 
 # CUDA Toolkitの導入
-
-次にCUDA Toolkitのインストールに進む。
-
+次にCUDA Toolkitのインストールに進む。<br>
 https://developer.nvidia.com/cuda-downloads
 
-上記サイトから項目を選択していってdeb(network)でコマンドを取得する
+上記サイトから項目を選択していってdeb(network)を選び、コマンドを取得する<br>
 
 ```bash
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
@@ -51,7 +44,7 @@ sudo apt-get -y install cuda-toolkit-13-1
 reboot
 ```
 
-最後にCUDAのパスを通す
+最後にCUDAのパスを通す<br>
 
 ```bash
 export PATH=/usr/local/cuda:/usr/local/cuda/bin:$PATH
@@ -66,18 +59,15 @@ nvcc -V
 
 # cuDNNの導入
 
-最近だとpip install でPytorchを入れてる場合、勝手に入るので学習は問題なくできる。
+最近だとpip install でPytorchを入れてる場合、勝手に入るので学習は問題なくできる。<br>
+ONNXとか使う場合は環境全体への導入が必要。<br>
 
-ONNXとか使う場合は必要。
-
-NVIDIAのHPに行って手順通り進めればコマンドが出てくる
-
+cuDNNはNVIDIAのHPに行って手順通り進めれば導入用のコマンドが出てくる<br>
 [https://developer.nvidia.com/cudnn](https://developer.nvidia.com/cudnn)
 
 # Pytorch導入
 
-pytorchの公式サイトに行って環境を選ぶとインストールコマンドが出てくる
-
+pytorchの公式サイトに行って環境を選ぶとインストールコマンドが出てくる<br>
 [https://pytorch.org/get-started/locally/](https://pytorch.org/get-started/locally/)
 
 ここではCUDA13.0を使うので下記コマンドになると思う(インストールは仮想環境推奨)
@@ -88,7 +78,8 @@ pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu13
 
 # PytorchでCUDA認識の確認
 
-とりあえず下記Pythonコードを実行してみてそれっぽい内容が返ってくれば認識している
+下記Pythonコードを実行してみてそれっぽい内容が返ってくればPytorchがCUDAを認識している。<br>
+CUDA認識後はPytorch公式のMNISTを動かしてみると良い。
 
 ```python
 import torch
@@ -108,4 +99,9 @@ print(torch.backends.cudnn.is_available())
 print(torch.backends.cudnn.version())
 ```
 
-CUDA認識後はPytorch公式のMNISTを動かしてみると良い
+# その他
+実際にGPUが使われているか確認するにはnvitopというツールがおすすめ<br>
+インストールはaptで可能<br>
+```
+sudo apt install nvitop
+```

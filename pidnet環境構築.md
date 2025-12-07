@@ -36,28 +36,20 @@ git clone https://github.com/XuJiacong/PIDNet.git
 
 # pretrained modelの準備
 
-PIDNet公式では、ImageNetでトレーニングされたpretrainedモデルを利用してCytyscapes or CamVidでtrain→evalする手順が公開されている。
-
-pretrainモデルは現在リンク切れのため、ImageNetで1から学習するかKaggleに落ちてるモデルを持ってくる必要がある。（ここでは時間がかかるのでKaggleを使う）
+PIDNet公式では、ImageNetでトレーニングされたpretrainedモデルを利用してCytyscapes or CamVidでtrain→evalする手順が公開されている。<br>
+pretrainモデルは現在リンク切れのため、ImageNetで1から学習するかKaggleに落ちてるモデルを持ってくる必要がある。（ここでは時間がかかるのでKaggleを使う）<br>
 
 [https://www.kaggle.com/datasets/artlaran/pidnet-pretrained](https://www.kaggle.com/datasets/artlaran/pidnet-pretrained)
 
 ダウンロードしたpretrainedモデルは下記フォルダに格納する
-
 ```bash
 PIDNet/pretrained_models/imagenet
 ```
-
 # datasetの準備
-
-PIDNetには例題データセットとしてCityscapesとCamVidが使用されている。
-
-自分が使うデータセットで学習するのが良いのだけど、とりあえず動かすならこれに従うのが楽
-
-ここでどっちを使うかという話だがCityscapesは研究目的のみで商用利用は不可なのでCamvidを使うことになる
-
-ダウンロード先は下記のどちらか
-
+PIDNetには例題データセットとしてCityscapesとCamVidが使用されている。<br>
+自分が使うデータセットで学習するのが良いのだけど、とりあえず動かすならこれに従うのが楽。<bt>
+ここでどっちを使うかという話だが、Cityscapesは登録を求められてめんどくさいのでCamvidを使う。<br>
+ダウンロード先は下記のどちらか<br>
 [https://www.kaggle.com/datasets/carlolepelaars/camvid](https://www.kaggle.com/datasets/carlolepelaars/camvid)
 
 [https://datasets.cms.waikato.ac.nz/ufdl/camvid/](https://datasets.cms.waikato.ac.nz/ufdl/camvid/)
@@ -71,11 +63,9 @@ PIDNet/data/camvid/labels
 
 # ソースの修正
 
-PIDNetは2021年に作成されており、npのバージョン間互換性でエラーが発生する。
-
-特にintキャストしている部分がnp.int()になっておりこれをint()に直す必要がある。
-
-下記ソース内でCtrl＋Fで該当箇所を探して修正する
+PIDNetは2021年に作成されており、npのバージョン間互換性でエラーが発生する。<br>
+特にintキャストしている部分がnp.int()になっておりこれをint()に直す必要がある。<br>
+下記ソース内でCtrl＋Fで該当箇所を探して修正する。
 
 ```bash
 datasets/base_dataset.py
