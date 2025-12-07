@@ -103,5 +103,5 @@ print(torch.backends.cudnn.version())
 実際にGPUが使われているか確認するにはnvitopというツールがおすすめ<br>
 インストールはaptで可能<br>
 ```
-sudo apt install nvitop
+sudo apt install nvitop                   
 ```
